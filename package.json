@@ -29,12 +29,6 @@
     "@antfu/eslint-config": "^2.6.4",
     "eslint": "^8.56.0"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",
