@@ -1,6 +1,5 @@
 {
   "name": "react-schedule",
-  "type": "module",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -28,6 +27,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.6.4",
+    "cz-customizable": "7.0.0",
     "eslint": "^8.56.0",
     "husky": "^8.0.3"
   },
@@ -42,5 +42,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    }
   }
 }
