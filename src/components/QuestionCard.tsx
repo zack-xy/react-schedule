@@ -1,5 +1,6 @@
+/* eslint-disable no-console */
 import type { FC } from 'react'
-import React from 'react'
+import React, { useEffect } from 'react'
 import './QuestionCard.css'
 
 interface Props {
@@ -20,6 +21,12 @@ const QuestionCard: FC<Props> = (props) => {
   function deleteQuestion(id: string) {
     del && del(id)
   }
+
+  useEffect(() => {
+    return () => {
+      console.log('question card unmounted', id)
+    }
+  }, [])
 
   return (
     <div className="question-item">

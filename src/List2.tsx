@@ -1,15 +1,27 @@
+/* eslint-disable no-console */
 import type { FC } from 'react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { produce } from 'immer'
 import QuestionCard from './components/QuestionCard'
 
 const List2: FC = () => {
+  // 空数组，无依赖，组件初次渲染时触发
+  // React18开发环境会执行2次，生产环境执行1次
+  // 开发环境模拟创建、销毁、再创建流程，为了暴露可能的问题
+  useEffect(() => {
+    console.log('副作用')
+  }, [])
+
   const [questionList, setQuestionList] = useState([
     { id: 'q1', title: '问卷1', isPublished: false },
     { id: 'q2', title: '问卷2', isPublished: true },
     { id: 'q3', title: '问卷3', isPublished: false },
     { id: 'q4', title: '问卷4', isPublished: true },
   ])
+
+  useEffect(() => {
+    console.log('question list changed')
+  }, [questionList])
 
   function add() {
     const r = Math.random().toString().slice(-3)
