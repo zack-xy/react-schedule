@@ -6,7 +6,7 @@ import './App.css'
 // import Demo from './immerDemo'
 
 // import List1 from './List1'
-// import List2 from './List2'
+import List2 from './List2'
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
       {/* <Demo></Demo> */}
 
       {/* <List1 title="问卷调查列表"></List1> */}
-      {/* <List2></List2> */}
+      <List2></List2>
 
     </div>
   )
