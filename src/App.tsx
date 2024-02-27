@@ -6,6 +6,9 @@ import './App.css'
 // import useMouse from './hooks/useMouse'
 // import useGetInfo from './hooks/useGetInfo'
 
+// hook闭包陷阱
+// import ClosureTrap from './ClosureTrap'
+
 // import StateDemo1 from './StateDemo1'
 // import StateDemo2 from './StateDemo2'
 // import Demo from './immerDemo'
@@ -17,6 +20,7 @@ import './App.css'
 import List2 from './List2'
 
 function App() {
+  // useTitle('ahook app page')
   // useTitle('App page')
   // const { x, y } = useMouse()
   // const { loading, info } = useGetInfo()
@@ -29,6 +33,8 @@ function App() {
       </div> */}
 
       {/* <div>{loading ? '加载中...' : info}</div> */}
+
+      {/* <ClosureTrap></ClosureTrap> */}
 
       {/* <StateDemo1></StateDemo1> */}
       {/* <StateDemo2></StateDemo2> */}
