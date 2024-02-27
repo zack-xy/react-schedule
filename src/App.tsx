@@ -6,6 +6,7 @@ import './App.css'
 // import Demo from './immerDemo'
 // import UseRefDemo from './useRefDemo'
 // import UseMemoDemo from './useMemoDemo'
+// import UseCallbackDemo from './UseCallbackDemo'
 
 // import List1 from './List1'
 import List2 from './List2'
@@ -19,6 +20,7 @@ function App() {
       {/* <Demo></Demo> */}
       {/* <UseRefDemo></UseRefDemo> */}
       {/* <UseMemoDemo></UseMemoDemo> */}
+      {/* <UseCallbackDemo></UseCallbackDemo> */}
 
       {/* <List1 title="问卷调查列表"></List1> */}
       <List2></List2>
