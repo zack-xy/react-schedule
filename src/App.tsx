@@ -15,6 +15,7 @@ import './App.css'
 // import UseRefDemo from './useRefDemo'
 // import UseMemoDemo from './useMemoDemo'
 // import UseCallbackDemo from './UseCallbackDemo'
+import StyledComponentDemo from './StyledComponentDemo'
 
 // import List1 from './List1'
 import List2 from './List2'
@@ -42,6 +43,7 @@ function App() {
       {/* <UseRefDemo></UseRefDemo> */}
       {/* <UseMemoDemo></UseMemoDemo> */}
       {/* <UseCallbackDemo></UseCallbackDemo> */}
+      <StyledComponentDemo></StyledComponentDemo>
 
       {/* <List1 title="问卷调查列表"></List1> */}
       <List2></List2>
