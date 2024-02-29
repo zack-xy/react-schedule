@@ -1,5 +1,7 @@
 import type { FC } from 'react'
 import React, { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
+import { useTitle } from 'ahooks'
 import QuestionCard from '../../components/QuestionCard'
 import styles from './List.module.scss'
 
@@ -11,8 +13,14 @@ const rawQuestionList = [
 ]
 
 const List: FC = () => {
-  // eslint-disable-next-line unused-imports/no-unused-vars
+  useTitle('React问卷--我的问卷')
+  const [searchParams] = useSearchParams()
+  // eslint-disable-next-line no-console
+  console.log('keyword', searchParams.get('keyword'))
   const [questionList, setQuestionList] = useState(rawQuestionList)
+
+  // eslint-disable-next-line no-console
+  console.log(setQuestionList)
 
   return (
     <>
