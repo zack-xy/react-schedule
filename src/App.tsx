@@ -1,10 +1,12 @@
 import React from 'react'
 import './App.css'
+import List from './pages/List'
 
 function App() {
   return (
     <div className="App">
-      zack
+      <h1 style={{ background: 'lightgreen' }}>问卷 FE</h1>
+      <List></List>
     </div>
   )
 }
