@@ -3,7 +3,9 @@ import React from 'react'
 
 const Register: FC = () => {
   return (
-    <div></div>
+    <div>
+      Register
+    </div>
   )
 }
 
