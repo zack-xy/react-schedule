@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useTitle } from 'ahooks'
 import QuestionCard from '../../components/QuestionCard'
-import styles from './List.module.scss'
+import styles from './common.module.scss'
 
 const rawQuestionList = [
   { _id: 'q1', title: '问卷1', isPublished: false, isStar: true, answerCount: 5, createdAt: '2022-01-01 13:00:06' },
@@ -33,13 +33,13 @@ const List: FC = () => {
         </div>
       </div>
       <div className={styles.content}>
-        {questionList.map((q) => {
+        {questionList.length > 0 && questionList.map((q) => {
           const { _id } = q
           return <QuestionCard key={_id} {...q}></QuestionCard>
         })}
       </div>
       <div className={styles.footer}>
-        footer
+        上划加载更多......
       </div>
     </>
   )
