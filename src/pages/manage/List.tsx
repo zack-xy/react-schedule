@@ -2,6 +2,7 @@ import type { FC } from 'react'
 import React, { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useTitle } from 'ahooks'
+import { Typography } from 'antd'
 import QuestionCard from '../../components/QuestionCard'
 import styles from './common.module.scss'
 
@@ -11,6 +12,8 @@ const rawQuestionList = [
   { _id: 'q3', title: '问卷3', isPublished: false, isStar: true, answerCount: 7, createdAt: '2022-03-01 15:00:06' },
   { _id: 'q4', title: '问卷4', isPublished: true, isStar: false, answerCount: 10, createdAt: '2022-04-01 16:00:08' },
 ]
+
+const { Title } = Typography
 
 const List: FC = () => {
   useTitle('React问卷--我的问卷')
@@ -26,7 +29,7 @@ const List: FC = () => {
     <>
       <div className={styles.header}>
         <div className={styles.left}>
-          <h3>我的问卷</h3>
+          <Title level={3}>我的问卷</Title>
         </div>
         <div className={styles.right}>
           搜索
