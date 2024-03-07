@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { useTitle } from 'ahooks'
 import { Button, Empty, Modal, Space, Table, Tag, Typography } from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
+import ListSearch from '../../components/ListSearch'
 import styles from './common.module.scss'
 
 const rawQuestionList = [
@@ -84,7 +85,7 @@ const Trash: FC = () => {
           <Title level={3}>回收站</Title>
         </div>
         <div className={styles.right}>
-          搜索
+          <ListSearch></ListSearch>
         </div>
       </div>
       <div className={styles.content}>
