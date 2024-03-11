@@ -1,19 +1,35 @@
 import type { FC } from 'react'
-import React from 'react'
+import React, { useState } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
-import { Button, Divider, Space } from 'antd'
+import { Button, Divider, Space, message } from 'antd'
 import { BarsOutlined, DeleteOutlined, PlusOutlined, StarOutlined } from '@ant-design/icons'
+import { createQuestionService } from '../services/question'
 import styles from './ManageLayout.module.scss'
 
 const ManageLayout: FC = () => {
   const nav = useNavigate()
   const { pathname } = useLocation()
+
+  const [loading, setLoading] = useState(false)
+
+  async function handleCreateClick() {
+    setLoading(true)
+
+    const data = await createQuestionService()
+    const { id } = data || {}
+    if (id) {
+      nav(`/question/edit/${id}`)
+      message.success('创建成功')
+    }
+
+    setLoading(false)
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.left}>
-        <p>manageLayout Left</p>
         <Space direction="vertical">
-          <Button type="primary" size="large" icon={<PlusOutlined />}>创建问卷</Button>
+          <Button type="primary" size="large" icon={<PlusOutlined />} onClick={handleCreateClick} disabled={loading}>创建问卷</Button>
           <Divider />
           <Button type={pathname.startsWith('/manage/list') ? 'default' : 'text'} size="large" icon={<BarsOutlined />} onClick={() => nav('/manage/list')}>我的问卷</Button>
           <Button type={pathname.startsWith('/manage/star') ? 'default' : 'text'} size="large" icon={<StarOutlined />} onClick={() => nav('/manage/star')}>星标问卷</Button>

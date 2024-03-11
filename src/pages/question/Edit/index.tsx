@@ -1,23 +1,16 @@
 import type { FC } from 'react'
-import React, { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import { getQuestionService } from '../../../services/question'
+import React from 'react'
+import useLoadQuestionData from '../../../hooks/useLoadQuestionData'
 
 const Edit: FC = () => {
-  const { id = '' } = useParams()
-
-  useEffect(() => {
-    async function fn() {
-      const data = await getQuestionService(id)
-      // eslint-disable-next-line no-console
-      console.log('request data', data)
-    }
-    fn()
-  }, [])
+  const { loading, questionData } = useLoadQuestionData()
 
   return (
     <div>
-      {id}
+      <p>Edit page</p>
+      <div>
+        {loading ? <p>Loading....</p> : <p>{JSON.stringify(questionData)}</p>}
+      </div>
     </div>
   )
 }
