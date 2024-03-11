@@ -1,11 +1,11 @@
 import type { FC } from 'react'
 import React from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { useRequest, useTitle } from 'ahooks'
+import { useTitle } from 'ahooks'
 import { Spin, Typography } from 'antd'
 import QuestionCard from '../../components/QuestionCard'
 import ListSearch from '../../components/ListSearch'
-import { getQuestionListService } from '../../services/question'
+import useLoadQuestionListData from '../../hooks/useLoadQuestionListData'
 import styles from './common.module.scss'
 
 const { Title } = Typography
@@ -16,7 +16,7 @@ const List: FC = () => {
   // eslint-disable-next-line no-console
   console.log('keyword', searchParams.get('keyword'))
 
-  const { data = {}, loading } = useRequest(getQuestionListService)
+  const { data = {}, loading } = useLoadQuestionListData()
   const { list = [] } = data
 
   return (

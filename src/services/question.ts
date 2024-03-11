@@ -1,6 +1,10 @@
 import type { ResDataType } from './ajax'
 import axios from './ajax'
 
+interface SearchOpton {
+  keyword: string
+}
+
 // 获取单个问卷信息
 export async function getQuestionService(id: string): Promise<ResDataType> {
   const url = `/api/question/${id}`
@@ -16,8 +20,8 @@ export async function createQuestionService(): Promise<ResDataType> {
 }
 
 // 获取问卷列表
-export async function getQuestionListService(): Promise<ResDataType> {
+export async function getQuestionListService(opt: Partial<SearchOpton> = {}): Promise<ResDataType> {
   const url = '/api/questions/list'
-  const data = (await axios.get(url)) as ResDataType
+  const data = (await axios.get(url, { params: opt })) as ResDataType
   return data
 }
