@@ -1,18 +1,12 @@
 import type { FC } from 'react'
-import React, { useState } from 'react'
+import React from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { useTitle } from 'ahooks'
-import { Typography } from 'antd'
+import { useRequest, useTitle } from 'ahooks'
+import { Spin, Typography } from 'antd'
 import QuestionCard from '../../components/QuestionCard'
 import ListSearch from '../../components/ListSearch'
+import { getQuestionListService } from '../../services/question'
 import styles from './common.module.scss'
-
-const rawQuestionList = [
-  { _id: 'q1', title: '问卷1', isPublished: false, isStar: true, answerCount: 5, createdAt: '2022-01-01 13:00:06' },
-  { _id: 'q2', title: '问卷2', isPublished: true, isStar: false, answerCount: 6, createdAt: '2022-02-01 14:00:06' },
-  { _id: 'q3', title: '问卷3', isPublished: false, isStar: true, answerCount: 7, createdAt: '2022-03-01 15:00:06' },
-  { _id: 'q4', title: '问卷4', isPublished: true, isStar: false, answerCount: 10, createdAt: '2022-04-01 16:00:08' },
-]
 
 const { Title } = Typography
 
@@ -21,10 +15,9 @@ const List: FC = () => {
   const [searchParams] = useSearchParams()
   // eslint-disable-next-line no-console
   console.log('keyword', searchParams.get('keyword'))
-  const [questionList, setQuestionList] = useState(rawQuestionList)
 
-  // eslint-disable-next-line no-console
-  console.log(setQuestionList)
+  const { data = {}, loading } = useRequest(getQuestionListService)
+  const { list = [] } = data
 
   return (
     <>
@@ -37,7 +30,12 @@ const List: FC = () => {
         </div>
       </div>
       <div className={styles.content}>
-        {questionList.length > 0 && questionList.map((q) => {
+        {loading && (
+          <div style={{ textAlign: 'center' }}>
+            <Spin />
+          </div>
+        )}
+        {!loading && list.length > 0 && list.map((q: any) => {
           const { _id } = q
           return <QuestionCard key={_id} {...q}></QuestionCard>
         })}
