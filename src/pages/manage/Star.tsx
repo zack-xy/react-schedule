@@ -1,28 +1,19 @@
 import type { FC } from 'react'
-import React, { useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import React from 'react'
 import { useTitle } from 'ahooks'
-import { Empty, Typography } from 'antd'
+import { Empty, Spin, Typography } from 'antd'
 import QuestionCard from '../../components/QuestionCard'
 import ListSearch from '../../components/ListSearch'
+import useLoadQuestionListData from '../../hooks/useLoadQuestionListData'
 import styles from './common.module.scss'
-
-const rawQuestionList = [
-  { _id: 'q1', title: '问卷111', isPublished: false, isStar: true, answerCount: 5, createdAt: '2022-01-01 13:00:06' },
-  { _id: 'q2', title: '问卷222', isPublished: true, isStar: true, answerCount: 6, createdAt: '2022-02-01 14:00:06' },
-]
 
 const { Title } = Typography
 
 const Star: FC = () => {
   useTitle('React问卷--标星问卷')
-  const [searchParams] = useSearchParams()
-  // eslint-disable-next-line no-console
-  console.log('keyword', searchParams.get('keyword'))
-  const [questionList, setQuestionList] = useState(rawQuestionList)
 
-  // eslint-disable-next-line no-console
-  console.log(setQuestionList)
+  const { data = {}, loading } = useLoadQuestionListData({ isStar: true })
+  const { list = [] } = data
 
   return (
     <>
@@ -35,8 +26,13 @@ const Star: FC = () => {
         </div>
       </div>
       <div className={styles.content}>
-        {questionList.length === 0 && <Empty description="暂无数据" />}
-        {questionList.length > 0 && questionList.map((q) => {
+        {loading && (
+          <div style={{ textAlign: 'center' }}>
+            <Spin />
+          </div>
+        )}
+        {!loading && list.length === 0 && <Empty description="暂无数据" />}
+        {!loading && list.length > 0 && list.map((q: any) => {
           const { _id } = q
           return <QuestionCard key={_id} {...q}></QuestionCard>
         })}

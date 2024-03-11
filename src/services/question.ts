@@ -3,6 +3,8 @@ import axios from './ajax'
 
 interface SearchOpton {
   keyword: string
+  isStar: boolean
+  isDeleted: boolean
 }
 
 // 获取单个问卷信息
