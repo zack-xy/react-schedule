@@ -5,6 +5,7 @@ import { Button, Empty, Modal, Space, Spin, Table, Tag, Typography } from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import ListSearch from '../../components/ListSearch'
 import useLoadQuestionListData from '../../hooks/useLoadQuestionListData'
+import ListPage from '../../components/ListPage'
 import styles from './common.module.scss'
 
 const { Title } = Typography
@@ -14,7 +15,7 @@ const Trash: FC = () => {
   useTitle('React问卷--回收站')
   const [selectedIds, setSelectedIds] = useState<string []>([])
   const { data = {}, loading } = useLoadQuestionListData({ isDeleted: true })
-  const { list = [] } = data
+  const { list = [], total = 0 } = data
 
   const tableColumns = [
     {
@@ -90,6 +91,9 @@ const Trash: FC = () => {
         {
           !loading && list.length > 0 && TableElement
         }
+      </div>
+      <div className={styles.footer}>
+        <ListPage total={total} />
       </div>
     </>
   )
