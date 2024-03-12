@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useDebounceFn, useRequest, useTitle } from 'ahooks'
 import { Empty, Spin, Typography } from 'antd'
@@ -80,7 +80,7 @@ const List: FC = () => {
     }
   }, [searchParams, haveMoreData])
 
-  const LoadMoreContentElem = () => {
+  const LoadMoreContentElem = useMemo(() => {
     if (!started || loading)
       return <Spin />
     if (total === 0)
@@ -88,7 +88,7 @@ const List: FC = () => {
     if (!haveMoreData)
       return <span>没有更多了...</span>
     return <span>开始加载下一页</span>
-  }
+  }, [started, loading, haveMoreData])
 
   return (
     <>
@@ -108,7 +108,7 @@ const List: FC = () => {
       </div>
       <div className={styles.footer}>
         <div ref={containerRef}>
-          {LoadMoreContentElem()}
+          {LoadMoreContentElem}
         </div>
       </div>
     </>
