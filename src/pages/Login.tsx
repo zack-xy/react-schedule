@@ -1,9 +1,12 @@
 import type { FC } from 'react'
 import React, { useEffect } from 'react'
-import { Button, Checkbox, Form, Input, Space, Typography } from 'antd'
+import { Button, Checkbox, Form, Input, Space, Typography, message } from 'antd'
 import { UserAddOutlined } from '@ant-design/icons'
-import { Link } from 'react-router-dom'
-import { REGISTER_PATHNAME } from '../router'
+import { Link, useNavigate } from 'react-router-dom'
+import { useRequest } from 'ahooks'
+import { MANAGE_INDEX_PATHNAME, REGISTER_PATHNAME } from '../router'
+import { loginService } from '../services/user'
+import { setToken } from '../utils/user-token'
 import styles from './Login.module.scss'
 
 const { Title } = Typography
@@ -30,14 +33,30 @@ function getUserInfoFromStorage() {
 
 const Login: FC = () => {
   const [form] = Form.useForm()
+  const nav = useNavigate()
 
   useEffect(() => {
     const { username, password } = getUserInfoFromStorage()
     form.setFieldsValue({ username, password })
   }, [])
 
+  const { run: handleLogin } = useRequest(async (values) => {
+    const { username, password } = values
+    const data = await loginService(username, password)
+    return data
+  }, {
+    manual: true,
+    onSuccess(result) {
+      const { token = '' } = result
+      setToken(token)
+      message.success('登陆成功')
+      nav(MANAGE_INDEX_PATHNAME)
+    },
+  })
+
   const onFinished = (values: any) => {
     const { username, password, remember } = values
+    handleLogin(values) // 登陆
     if (remember)
       rememberUser(username, password)
     else
@@ -56,7 +75,7 @@ const Login: FC = () => {
           labelCol={{ span: 6 }}
           wrapperCol={{ span: 16 }}
           onFinish={onFinished}
-          initialValues={{ remember: true }}
+          initialValues={{ remember: false }}
           form={form}
         >
           <Form.Item
