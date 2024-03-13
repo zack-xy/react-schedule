@@ -4,7 +4,7 @@ import { Button, Divider, Modal, Popconfirm, Space, Tag, message } from 'antd'
 import { CopyOutlined, DeleteOutlined, EditOutlined, ExclamationCircleOutlined, LineChartOutlined, StarOutlined } from '@ant-design/icons'
 import { Link, useNavigate } from 'react-router-dom'
 import { useRequest } from 'ahooks'
-import { updateQuestionService } from '../services/question'
+import { duplicateQuestionService, updateQuestionService } from '../services/question'
 import styles from './QuestionCard.module.scss'
 
 interface PropsType {
@@ -32,9 +32,16 @@ const QuestionCard: FC<PropsType> = (props) => {
     },
   })
 
-  function duplicate() {
-    message.success('已复制')
-  }
+  const { loading: duplicateLoading, run: duplicate } = useRequest(
+    async () => await duplicateQuestionService(_id),
+    {
+      manual: true,
+      onSuccess(result) {
+        message.success('复制成功')
+        nav(`/question/edit/${result.id}`)
+      },
+    },
+  )
 
   function hanldeDelete(id: string) {
     confirm({
@@ -112,6 +119,7 @@ const QuestionCard: FC<PropsType> = (props) => {
               <Button
                 type="text"
                 icon={<CopyOutlined />}
+                disabled={duplicateLoading}
                 size="small"
               >
                 复制
