@@ -43,3 +43,10 @@ export async function duplicateQuestionService(id: string): Promise<ResDataType>
   const data = (await axios.post(url)) as ResDataType
   return data
 }
+
+// 彻底删除问卷
+export async function deleteQuestionsService(ids: string[]): Promise<ResDataType> {
+  const url = `/api/question/batchDelete`
+  const data = (await axios.delete(url, { data: { ids } })) as ResDataType
+  return data
+}

@@ -1,11 +1,12 @@
 import type { FC } from 'react'
 import React, { useState } from 'react'
-import { useTitle } from 'ahooks'
-import { Button, Empty, Modal, Space, Spin, Table, Tag, Typography } from 'antd'
+import { useRequest, useTitle } from 'ahooks'
+import { Button, Empty, Modal, Space, Spin, Table, Tag, Typography, message } from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import ListSearch from '../../components/ListSearch'
 import useLoadQuestionListData from '../../hooks/useLoadQuestionListData'
 import ListPage from '../../components/ListPage'
+import { deleteQuestionsService, updateQuestionService } from '../../services/question'
 import styles from './common.module.scss'
 
 const { Title } = Typography
@@ -14,8 +15,32 @@ const { confirm } = Modal
 const Trash: FC = () => {
   useTitle('React问卷--回收站')
   const [selectedIds, setSelectedIds] = useState<string []>([])
-  const { data = {}, loading } = useLoadQuestionListData({ isDeleted: true })
+  const { data = {}, loading, refresh } = useLoadQuestionListData({ isDeleted: true })
   const { list = [], total = 0 } = data
+
+  // 恢复
+  const { run: recover } = useRequest(async () => {
+    for await (const id of selectedIds)
+      await updateQuestionService(id, { isDeleted: false })
+  }, {
+    manual: true,
+    debounceWait: 500, // 防抖
+    onSuccess() {
+      message.success('已恢复')
+      refresh()
+      setSelectedIds([])
+    },
+  })
+
+  // 彻底删除
+  const { run: deleteQuestions } = useRequest(async () => deleteQuestionsService(selectedIds), {
+    manual: true,
+    onSuccess() {
+      message.success('删除成功')
+      refresh()
+      setSelectedIds([])
+    },
+  })
 
   const tableColumns = [
     {
@@ -43,7 +68,7 @@ const Trash: FC = () => {
     <>
       <div style={{ marginBottom: '16px' }}>
         <Space>
-          <Button type="primary" disabled={selectedIds.length === 0}>恢复</Button>
+          <Button type="primary" disabled={selectedIds.length === 0} onClick={recover}>恢复</Button>
           <Button danger disabled={selectedIds.length === 0} onClick={handleDelete}>彻底删除</Button>
         </Space>
       </div>
@@ -67,7 +92,7 @@ const Trash: FC = () => {
       title: '确认彻底删除该问卷？',
       icon: <ExclamationCircleOutlined />,
       content: '删除后无法找回',
-      onOk: () => {},
+      onOk: deleteQuestions,
     })
   }
 
