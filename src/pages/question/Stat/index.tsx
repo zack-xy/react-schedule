@@ -3,13 +3,13 @@ import React from 'react'
 import useLoadQuestionData from '../../../hooks/useLoadQuestionData'
 
 const Stat: FC = () => {
-  const { loading, data } = useLoadQuestionData()
+  const { loading } = useLoadQuestionData()
 
   return (
     <div>
       <p>Stat page</p>
       <div>
-        {loading ? <p>Loading....</p> : <p>{JSON.stringify(data)}</p>}
+        {loading ? <p>Loading....</p> : <p>内容</p>}
       </div>
     </div>
   )
