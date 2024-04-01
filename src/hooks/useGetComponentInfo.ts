@@ -4,9 +4,10 @@ import type { ComponentsStateType } from '../store/componentsReducer'
 
 function useGetComponentInfo() {
   const components = useSelector<StoreType>(state => state.components) as ComponentsStateType
-  const { componentList = [] } = components
+  const { componentList = [], selectedId } = components
   return {
     componentList,
+    selectedId,
   }
 }
 

@@ -26,7 +26,13 @@ function useLoadQuestionData() {
     if (!data)
       return
     const { componentList = [] } = data
-    dispatch(resetComponents({ componentList }))
+
+    // 获取默认的selectedId
+    let selectedId = ''
+    if (componentList.length > 0)
+      selectedId = componentList[0].fe_id
+
+    dispatch(resetComponents({ componentList, selectedId }))
   }, [data])
 
   return { loading, error }
