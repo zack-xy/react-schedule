@@ -7,6 +7,7 @@ import styles from './index.module.scss'
 import EditCanvas from './EditCanvas'
 import LeftPanel from './LeftPanel'
 import RightPanel from './RightPanel'
+import EditHeader from './EditHeader'
 
 const Edit: FC = () => {
   const { loading } = useLoadQuestionData()
@@ -18,7 +19,7 @@ const Edit: FC = () => {
 
   return (
     <div className={styles.container}>
-      <div style={{ backgroundColor: '#fff', height: '40px' }}>header</div>
+      <EditHeader />
       <div className={styles['content-wrapper']}>
         <div className={styles.content}>
           <div className={styles.left}>
