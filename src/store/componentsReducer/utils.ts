@@ -1,4 +1,4 @@
-import type { ComponentInfoType } from './index'
+import type { ComponentInfoType, ComponentsStateType } from './index'
 
 export function getNextSelectedId(fe_id: string, componentList: ComponentInfoType[]) {
   const visibleComponentList = componentList.filter(c => !c.isHidden)
@@ -18,4 +18,16 @@ export function getNextSelectedId(fe_id: string, componentList: ComponentInfoTyp
       newSelectedId = componentList[index + 1].fe_id
   }
   return newSelectedId
+}
+
+// 插入新组件
+export function insertNewComponent(draft: ComponentsStateType, newComponent: ComponentInfoType) {
+  const { selectedId, componentList } = draft
+  const index = componentList.findIndex(c => c.fe_id === selectedId)
+  if (index < 0)
+    draft.componentList.push(newComponent)
+  else
+    draft.componentList.splice(index + 1, 0, newComponent)
+
+  draft.selectedId = newComponent.fe_id
 }
