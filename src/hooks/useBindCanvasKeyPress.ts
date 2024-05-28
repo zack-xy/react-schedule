@@ -1,6 +1,6 @@
 import { useKeyPress } from 'ahooks'
 import { useDispatch } from 'react-redux'
-import { copySelectedComponent, pasteCopiedComponent, removeSelectedComponent } from '../store/componentsReducer'
+import { copySelectedComponent, pasteCopiedComponent, removeSelectedComponent, selectNextComponent, selectPrevComponent } from '../store/componentsReducer'
 
 // 当前光标命中的元素是否是合法的（光标是否在编辑画布上）
 function isActiveElementValid() {
@@ -28,6 +28,20 @@ function useBindCanvasKeyPress() {
     if (isActiveElementValid())
       dispatch(pasteCopiedComponent())
   })
+
+  // 选中向上移动
+  useKeyPress(['uparrow'], () => {
+    if (isActiveElementValid())
+      dispatch(selectPrevComponent())
+  })
+
+  // 选中向下移动
+  useKeyPress(['downarrow'], () => {
+    if (isActiveElementValid())
+      dispatch(selectNextComponent())
+  })
+
+  // TODO 撤销重做
 }
 
 export default useBindCanvasKeyPress

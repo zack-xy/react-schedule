@@ -117,6 +117,24 @@ export const componentsSlice = createSlice({
         insertNewComponent(draft, copiedComponent)
       }
     }),
+
+    // 选中上一个
+    selectPrevComponent: produce((draft: ComponentsStateType) => {
+      const { selectedId, componentList } = draft
+      const selectedIdx = componentList.findIndex(i => i.fe_id === selectedId)
+      if (selectedIdx <= 0)
+        return
+      draft.selectedId = componentList[selectedIdx - 1].fe_id
+    }),
+
+    // 选中下一个
+    selectNextComponent: produce((draft: ComponentsStateType) => {
+      const { selectedId, componentList } = draft
+      const selectedIdx = componentList.findIndex(i => i.fe_id === selectedId)
+      if (selectedIdx < 0 || selectedIdx + 1 === componentList.length)
+        return
+      draft.selectedId = componentList[selectedIdx + 1].fe_id
+    }),
   },
 })
 
@@ -130,6 +148,8 @@ export const {
   toggleComponentLocked,
   copySelectedComponent,
   pasteCopiedComponent,
+  selectPrevComponent,
+  selectNextComponent,
 } = componentsSlice.actions
 
 export default componentsSlice.reducer
