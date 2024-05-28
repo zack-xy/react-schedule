@@ -6,6 +6,7 @@ import classNames from 'classnames'
 import useGetComponentInfo from '../../../hooks/useGetComponentInfo'
 import { getComponentConfByType } from '../../../components/QuestionComponents'
 import { type ComponentInfoType, changeSelectedId } from '../../../store/componentsReducer'
+import useBindCanvasKeyPress from '../../../hooks/useBindCanvasKeyPress'
 import styles from './EditCanvas.module.scss'
 
 interface PropsType {
@@ -25,10 +26,14 @@ const EditCanvas: FC<PropsType> = ({ loading }) => {
   const { componentList, selectedId } = useGetComponentInfo()
   const dispatch = useDispatch()
 
+  // 点击组件，选中
   function handleClick(event: MouseEvent, id: string) {
     event.stopPropagation()
     dispatch(changeSelectedId(id))
   }
+
+  // 绑定快捷键
+  useBindCanvasKeyPress()
 
   if (loading) {
     return (
