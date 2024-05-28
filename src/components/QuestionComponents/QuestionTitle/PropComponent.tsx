@@ -4,7 +4,7 @@ import { Checkbox, Form, Input, Select } from 'antd'
 import type { QuestionTitlePropsType } from './interface'
 
 const PropComponent: FC<QuestionTitlePropsType> = (props) => {
-  const { text, level, isCenter, onChange } = props
+  const { text, level, isCenter, onChange, disabled } = props
   const [form] = Form.useForm()
 
   useEffect(() => {
@@ -22,6 +22,7 @@ const PropComponent: FC<QuestionTitlePropsType> = (props) => {
       initialValues={{ text, level, isCenter }}
       form={form}
       onValuesChange={handleValueChange}
+      disabled={disabled}
     >
       <Form.Item label="标题内容" name="text" rules={[{ required: true, message: '请输入标题内容' }]}>
         <Input />
